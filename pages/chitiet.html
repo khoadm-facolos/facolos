@@ -1,0 +1,33 @@
+<div class="page-title">
+  <h1 class="serif-font">Bảng số liệu chi tiết Báo cáo Quản trị</h1>
+  <p class="text-muted">Đối chiếu Kế hoạch — Thực tế — Chênh lệch theo từng khoản mục, xem theo Tháng / Quý / 6 tháng / Cả năm.</p>
+</div>
+
+<!-- Timeframe Period Switch Controls -->
+<div class="tab-toggle-container mb-4 d-flex justify-content-between align-items-center flex-wrap gap-3">
+  <div class="detail-controls d-flex align-items-center gap-3">
+    <label class="text-brand fw-bold"><i class="bi bi-clock-history me-1"></i>Xem theo:</label>
+    <div class="toggle-switch">
+      <button class="toggle-btn active" id="btnViewMonth" onclick="switchDetailView('month')">Tháng</button>
+      <button class="toggle-btn" id="btnViewQuarter" onclick="switchDetailView('quarter')">Quý</button>
+      <button class="toggle-btn" id="btnViewHalf" onclick="switchDetailView('half')">6 tháng</button>
+      <button class="toggle-btn" id="btnViewYear" onclick="switchDetailView('year')">Cả năm</button>
+    </div>
+  </div>
+  <div class="dim-filter">
+    <span class="text-muted fs-6">Năm đang xem: <b id="detailYearLabel" class="text-brand font-monospace fw-bold">—</b> (đổi ở bộ lọc "Năm" phía trên)</span>
+  </div>
+</div>
+
+<!-- Detail table with sticky headers -->
+<div class="detail-table-wrap">
+  <table class="table detail-table align-middle table-hover mb-0" id="detailTable">
+    <thead id="detailThead"></thead>
+    <tbody id="detailTbody"></tbody>
+  </table>
+</div>
+
+<div class="detail-note">
+  <i class="bi bi-info-square me-1 text-gold"></i>
+  Ghi chú: "Doanh thu bán hàng" và "Các khoản giảm trừ" chưa có sheet dữ liệu tách riêng trong file nguồn, tạm giả định "Doanh thu bán hàng" = "Doanh thu thuần" và "Các khoản giảm trừ" = 0. Nếu có số liệu thật, bổ sung 2 chỉ tiêu này vào sheet KPI_thang để bảng tự cập nhật chính xác.
+</div>

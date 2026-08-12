@@ -1,0 +1,246 @@
+<div class="page-title">
+  <h1 class="serif-font">Phân tích doanh thu theo Kênh và Sản phẩm</h1>
+  <p class="text-muted">Chọn xem theo Kênh bán hoặc Nhóm sản phẩm; xem tổng hợp tất cả hoặc đi sâu vào từng kênh/sản phẩm.</p>
+</div>
+
+<!-- Dim Selector Controls -->
+<div class="tab-toggle-container mb-4 d-flex justify-content-between align-items-center flex-wrap gap-3">
+  <div class="toggle-switch">
+    <button class="toggle-btn active" id="btnTabKenh" onclick="switchDimTab('kenh')">Theo Kênh bán</button>
+    <button class="toggle-btn" id="btnTabSp" onclick="switchDimTab('sp')">Theo Nhóm sản phẩm</button>
+  </div>
+  <div class="dim-filter" id="kenhFilterContainer">
+    <select id="kenhSelect" class="form-select form-select-sm"></select>
+  </div>
+  <div class="dim-filter" id="spFilterContainer" style="display:none;">
+    <select id="spSelect" class="form-select form-select-sm"></select>
+  </div>
+</div>
+
+<!-- Block Kenh -->
+<div id="blockKenh">
+  <div id="kenhAllView">
+    <div class="subsection pt-0">
+      <div class="section-head mb-3">
+        <div>
+          <h2 class="serif-font">Doanh thu từng kênh bán</h2>
+        </div>
+      </div>
+      <div class="scorecards mb-4" id="kenhCards"></div>
+      <div id="kenhTableWrap" class="table-wrap"></div>
+    </div>
+
+    <div class="subsection">
+      <div class="section-head mb-3">
+        <div>
+          <h2 class="serif-font">Biến động và lũy kế doanh thu theo kênh</h2>
+        </div>
+      </div>
+      <div class="chart-card mb-4">
+        <h3 class="serif-font">Thực tế vs kế hoạch — kỳ này</h3>
+        <div class="chart-sub text-muted">Tỷ đồng</div>
+        <div class="chart-wrap" style="min-height:280px;"><canvas id="kenhChartMain"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <h3 class="serif-font">Lũy kế doanh thu các kênh (YTD)</h3>
+        <div class="chart-sub text-muted">Diễn biến các tháng từ đầu năm</div>
+        <div class="chart-wrap"><canvas id="kenhChartCum"></canvas></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="kenhFocusView" style="display:none;">
+    <div class="subsection pt-0">
+      <div class="section-head mb-3">
+        <div>
+          <h2 class="serif-font">Doanh thu kênh đang chọn</h2>
+        </div>
+      </div>
+      <div class="stat-strip" id="kenhStatStrip"></div>
+    </div>
+
+    <div class="subsection">
+      <div class="section-head mb-3">
+        <div>
+          <h2 class="serif-font">Biến động và lũy kế</h2>
+        </div>
+      </div>
+      <div class="row g-4">
+        <div class="col-lg-6">
+          <div class="chart-card h-100">
+            <h3 class="serif-font">Biến động theo tháng</h3>
+            <div class="chart-sub text-muted">6 tháng gần nhất</div>
+            <div class="chart-wrap"><canvas id="kenhChartFocusTrend"></canvas></div>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="chart-card h-100">
+            <h3 class="serif-font">Lũy kế từ đầu năm</h3>
+            <div class="chart-sub text-muted">Kế hoạch vs Thực tế</div>
+            <div class="chart-wrap"><canvas id="kenhChartFocusCum"></canvas></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="section-head mb-3">
+      <div>
+        <h2 class="serif-font">Top sản phẩm</h2>
+      </div>
+    </div>
+    <div class="row g-4">
+      <div class="col-lg-5">
+        <div class="top-list-panel h-100" id="kenhTopListPanel">
+          <div class="top-list-header d-flex align-items-center justify-content-between">
+            <h3 class="serif-font">Xếp hạng sản phẩm</h3>
+            <button class="btn-sort" id="kenhSortBtn" onclick="toggleKenhSort()">Cao → Thấp</button>
+          </div>
+          <div class="top-list-body" id="kenhTopList"></div>
+        </div>
+      </div>
+      <div class="col-lg-7">
+        <div class="top-detail-panel h-100" id="kenhTopDetail">
+          <div class="top-detail-empty" id="kenhDetailEmpty">
+            <span class="fs-1"><i class="bi bi-hand-index-thumb"></i></span>
+            <span>Chọn một sản phẩm ở bảng bên để xem chi tiết</span>
+          </div>
+          <div id="kenhDetailContent" style="display:none;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Block Product (SP) -->
+<div id="blockSp" style="display:none;">
+  <div id="spAllView">
+    <div class="subsection pt-0">
+      <div class="section-head mb-3">
+        <div>
+          <h2 class="serif-font">Doanh thu từng sản phẩm</h2>
+        </div>
+      </div>
+      <div class="scorecards mb-4" id="spCards"></div>
+      <div id="spTableWrap" class="table-wrap"></div>
+    </div>
+
+    <div class="subsection">
+      <div class="section-head mb-3">
+        <div>
+          <h2 class="serif-font">Biến động và lũy kế doanh thu theo sản phẩm</h2>
+        </div>
+      </div>
+      <div class="chart-card mb-4">
+        <h3 class="serif-font">Thực tế vs kế hoạch — kỳ này</h3>
+        <div class="chart-sub text-muted">Tỷ đồng</div>
+        <div class="chart-wrap" style="min-height:280px;"><canvas id="spChartMain"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <h3 class="serif-font">Lũy kế doanh thu sản phẩm (YTD)</h3>
+        <div class="chart-sub text-muted">Diễn biến các tháng từ đầu năm</div>
+        <div class="chart-wrap"><canvas id="spChartCum"></canvas></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="spFocusView" style="display:none;">
+    <div class="subsection pt-0">
+      <div class="section-head mb-3">
+        <div>
+          <h2 class="serif-font">Doanh thu sản phẩm đang chọn</h2>
+        </div>
+      </div>
+      <div class="stat-strip" id="spStatStrip"></div>
+    </div>
+
+    <div class="subsection">
+      <div class="section-head mb-3">
+        <div>
+          <h2 class="serif-font">Biến động và lũy kế</h2>
+        </div>
+      </div>
+      <div class="row g-4">
+        <div class="col-lg-6">
+          <div class="chart-card h-100">
+            <h3 class="serif-font">Biến động theo tháng</h3>
+            <div class="chart-sub text-muted">6 tháng gần nhất</div>
+            <div class="chart-wrap"><canvas id="spChartFocusTrend"></canvas></div>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="chart-card h-100">
+            <h3 class="serif-font">Lũy kế từ đầu năm</h3>
+            <div class="chart-sub text-muted">Kế hoạch vs Thực tế</div>
+            <div class="chart-wrap"><canvas id="spChartFocusCum"></canvas></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="section-head mb-3">
+      <div>
+        <h2 class="serif-font">Top sản phẩm</h2>
+      </div>
+    </div>
+    <div class="row g-4">
+      <div class="col-lg-5">
+        <div class="top-list-panel h-100" id="spTopListPanel">
+          <div class="top-list-header d-flex align-items-center justify-content-between">
+            <h3 class="serif-font">Xếp hạng sản phẩm</h3>
+            <button class="btn-sort" id="spSortBtn" onclick="toggleSpSort()">Cao → Thấp</button>
+          </div>
+          <div class="top-list-body" id="spTopList"></div>
+        </div>
+      </div>
+      <div class="col-lg-7">
+        <div class="top-detail-panel h-100" id="spTopDetail">
+          <div class="top-detail-empty" id="spDetailEmpty">
+            <span class="fs-1"><i class="bi bi-hand-index-thumb"></i></span>
+            <span>Chọn một sản phẩm ở bảng bên để xem chi tiết</span>
+          </div>
+          <div id="spDetailContent" style="display:none;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Geography/Map Section -->
+<div class="subsection">
+  <div class="section-head mb-3">
+    <div>
+      <h2 class="serif-font">Phân bố doanh thu theo địa bàn</h2>
+    </div>
+    <div class="section-desc text-muted fs-6" id="tinhThanhDesc">Tỷ đồng · tháng đang xem</div>
+  </div>
+
+  <div class="row g-4">
+    <div class="col-lg-4">
+      <div class="top-list-panel h-100">
+        <div class="top-list-header d-flex align-items-center justify-content-between">
+          <h3 class="serif-font">Xếp hạng địa bàn</h3>
+          <button class="btn-sort" id="tinhSortBtn" onclick="toggleTinhSort()">Cao → Thấp</button>
+        </div>
+        <div class="top-list-body" id="tinhThanhTopList"></div>
+      </div>
+    </div>
+
+    <div class="col-lg-8">
+      <div class="top-detail-panel h-100 p-3" id="mapPanel" style="position:relative;">
+        <div id="mapViewAll" class="d-flex flex-column h-100" style="min-height:420px; position: relative;">
+          <!-- Controls zoom -->
+          <div style="position: absolute; top: 10px; left: 10px; z-index: 10; display: flex; flex-direction: column; gap: 5px;">
+            <button onclick="zoomMapIn()" class="btn btn-sm btn-brand shadow-sm" style="width: 32px; height: 32px; padding: 0; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: bold;" title="Phóng to">+</button>
+            <button onclick="zoomMapOut()" class="btn btn-sm btn-brand shadow-sm" style="width: 32px; height: 32px; padding: 0; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: bold;" title="Thu nhỏ">-</button>
+            <button onclick="resetMapZoomPan()" class="btn btn-sm btn-brand-outline shadow-sm" style="width: 32px; height: 32px; padding: 0; display: flex; align-items: center; justify-content: center; font-size: 14px;" title="Reset"><i class="bi bi-arrow-counterclockwise"></i></button>
+          </div>
+          <div id="vnMapContainer" class="flex-grow-1 d-flex justify-content-center align-items-start"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

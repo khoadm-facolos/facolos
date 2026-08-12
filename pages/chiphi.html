@@ -1,0 +1,89 @@
+<div class="page-title">
+  <h1 class="serif-font">Cơ cấu và chi tiết kiểm soát chi phí</h1>
+  <p class="text-muted">Lọc theo phân loại (Giá vốn / Chi phí bán hàng / Chi phí quản lý) và trạng thái kiểm soát định mức.</p>
+</div>
+
+<!-- Costs Filter Bar -->
+<div class="controlbar sticky-none d-flex flex-wrap gap-3 align-items-center justify-content-start mb-4 rounded-3 p-3 shadow-sm border border-secondary-subtle" style="position:static; background-color: var(--paper-card);">
+  <div class="filter-item">
+    <label class="text-brand fw-bold"><i class="bi bi-filter me-1"></i>Phân loại:</label>
+    <select id="costTypeSelect" class="form-select form-select-sm bg-light text-dark border-secondary-subtle">
+      <option value="ALL">Tất cả</option>
+      <option value="Giá vốn">Giá vốn</option>
+      <option value="Chi phí bán hàng">Chi phí bán hàng</option>
+      <option value="Chi phí quản lý">Chi phí quản lý</option>
+    </select>
+  </div>
+  <div class="filter-item">
+    <label class="text-brand fw-bold"><i class="bi bi-check-circle me-1"></i>Trạng thái:</label>
+    <select id="costStatusSelect" class="form-select form-select-sm bg-light text-dark border-secondary-subtle">
+      <option value="ALL">Tất cả</option>
+      <option value="Vuot">Vượt định mức</option>
+      <option value="Tot">Kiểm soát tốt</option>
+    </select>
+  </div>
+</div>
+
+<!-- 01 - Cost Cards -->
+<div class="subsection pt-0">
+  <div class="section-head mb-3">
+    <div>
+      <h2 class="serif-font">Giá vốn · Chi phí bán hàng · Chi phí quản lý</h2>
+    </div>
+  </div>
+  <div class="scorecards mb-4" id="costCards" style="grid-template-columns:repeat(3,1fr);"></div>
+</div>
+
+<!-- 02 - Cost Structure Chart -->
+<div class="subsection">
+  <div class="section-head mb-3">
+    <div>
+      <h2 class="serif-font">Tỷ trọng theo khoản mục</h2>
+    </div>
+  </div>
+  <div class="chart-card mb-4">
+    <div class="chart-sub text-muted" id="costDesc">% trên tổng chi phí thực tế</div>
+    <div class="chart-wrap" id="costStructureWrap"><canvas id="chartCostStructure"></canvas></div>
+  </div>
+</div>
+
+<!-- 03 - Cost Departments Chart -->
+<div class="subsection">
+  <div class="section-head mb-3">
+    <div>
+      <h2 class="serif-font">Định mức vs Thực tế theo phòng ban</h2>
+    </div>
+  </div>
+  <div class="chart-card mb-4">
+    <div class="chart-wrap" id="costDeptWrap"><canvas id="chartCostDept"></canvas></div>
+  </div>
+</div>
+
+<!-- 04 - Detailed Cost List -->
+<div class="subsection">
+  <div class="section-head mb-3">
+    <div>
+      <h2 class="serif-font">Danh sách khoản mục theo bộ lọc</h2>
+    </div>
+  </div>
+  <div class="table-wrap table-scroll-y">
+    <table class="table align-middle data table-hover mb-0">
+      <thead>
+        <tr>
+          <th scope="col">Phân loại</th>
+          <th scope="col">Khoản mục chi phí</th>
+          <th scope="col">Phòng ban</th>
+          <th scope="col" class="num">Định mức</th>
+          <th scope="col" class="num">Thực tế</th>
+          <th scope="col" class="num">Chênh lệch</th>
+          <th scope="col">Trạng thái</th>
+          <th scope="col">Nguyên nhân chênh lệch</th>
+        </tr>
+      </thead>
+      <tbody id="costTableBody"></tbody>
+    </table>
+  </div>
+  <div class="table-scroll-hint" id="costTableHint">
+    Cuộn dọc để xem thêm — <span id="costRowCount" class="mono fw-bold">0</span> khoản mục
+  </div>
+</div>

@@ -1,0 +1,109 @@
+<div class="page-title d-flex justify-content-between align-items-center flex-wrap gap-2">
+  <div>
+    <h1 class="serif-font">Kết quả kinh doanh cốt lõi</h1>
+    <p class="text-muted">Thẻ điểm KPI, đối chiếu MoM/YoY và xu hướng doanh thu — giá vốn — chi phí vận hành theo tháng.</p>
+  </div>
+</div>
+
+<!-- 01 - KPI Cards -->
+<div class="subsection">
+  <div class="section-head">
+    <div>
+      <h2 class="serif-font">Kết quả kinh doanh cốt lõi</h2>
+    </div>
+    <div class="section-desc">
+      <p>
+        Mốc vạch là chỉ tiêu.
+      </p>
+      <p>
+        Kế hoạch màu sắc phản ánh mức độ hoàn thành thuận lợi/bất lợi.
+      </p>
+    </div>
+  </div>
+  <div class="scorecards" id="kpiCards"></div>
+</div>
+
+<!-- 02 - Comparison Table -->
+<div class="subsection">
+  <div class="section-head">
+    <div>
+      <h2 class="serif-font">Đối chiếu với tháng trước (MoM) và cùng kỳ năm trước (YoY)</h2>
+    </div>
+  </div>
+  <div class="table-wrap">
+    <table class="table align-middle cmp-table table-hover mb-0">
+      <thead>
+        <tr>
+          <th scope="col">Chỉ tiêu</th>
+          <th scope="col" class="num">Thực tế kỳ này</th>
+          <th scope="col" class="num">Tháng trước</th>
+          <th scope="col" class="num">So với tháng trước</th>
+          <th scope="col" class="num">Cùng kỳ năm trước</th>
+          <th scope="col" class="num">So với cùng kỳ</th>
+        </tr>
+      </thead>
+      <tbody id="cmpTableBody"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- 03 - Trend Charts -->
+<div class="subsection">
+  <div class="section-head">
+    <div>
+      <h2 class="serif-font">Diễn biến doanh thu, giá vốn và chi phí vận hành</h2>
+    </div>
+    <div class="section-desc">Theo dõi 6 tháng gần nhất và lũy kế từ đầu năm (YTD) đến tháng báo cáo.</div>
+  </div>
+
+  <div class="row g-4 mb-4">
+    <div class="col-lg-6">
+      <div class="chart-card h-100">
+        <h3 class="serif-font">Doanh thu thuần theo tháng</h3>
+        <div class="chart-sub text-muted">Kế hoạch vs Thực tế · Tỷ đồng</div>
+        <div class="chart-wrap"><canvas id="chartDttThang"></canvas></div>
+      </div>
+    </div>
+    <div class="col-lg-6">
+      <div class="chart-card h-100">
+        <h3 class="serif-font">Lũy kế doanh thu thuần (YTD)</h3>
+        <div class="chart-sub text-muted">Từ đầu năm đến tháng hiện tại · Tỷ đồng</div>
+        <div class="chart-wrap"><canvas id="chartDttLuyKe"></canvas></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row g-4 mb-4">
+    <div class="col-lg-6">
+      <div class="chart-card h-100">
+        <h3 class="serif-font">Giá vốn theo tháng</h3>
+        <div class="chart-sub text-muted">Kế hoạch vs Thực tế · Tỷ đồng</div>
+        <div class="chart-wrap"><canvas id="chartGvThang"></canvas></div>
+      </div>
+    </div>
+    <div class="col-lg-6">
+      <div class="chart-card h-100">
+        <h3 class="serif-font">Lũy kế giá vốn (YTD)</h3>
+        <div class="chart-sub text-muted">Từ đầu năm đến tháng hiện tại · Tỷ đồng</div>
+        <div class="chart-wrap"><canvas id="chartGvLuyKe"></canvas></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row g-4">
+    <div class="col-lg-6">
+      <div class="chart-card h-100">
+        <h3 class="serif-font">Chi phí vận hành theo tháng</h3>
+        <div class="chart-sub text-muted">Kế hoạch vs Thực tế · Tỷ đồng</div>
+        <div class="chart-wrap"><canvas id="chartCpThang"></canvas></div>
+      </div>
+    </div>
+    <div class="col-lg-6">
+      <div class="chart-card h-100">
+        <h3 class="serif-font">Lũy kế chi phí vận hành (YTD)</h3>
+        <div class="chart-sub text-muted">Từ đầu năm đến tháng hiện tại · Tỷ đồng</div>
+        <div class="chart-wrap"><canvas id="chartCpLuyKe"></canvas></div>
+      </div>
+    </div>
+  </div>
+</div>
